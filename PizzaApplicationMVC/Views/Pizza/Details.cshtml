@@ -1,39 +1,63 @@
-﻿@model PizzaApplicationMVC.Models.PizzaDTO
-
+﻿@model PizzaApplicationMVC.ViewModels.ToppingList
 @{
     ViewData["Title"] = "Details";
 }
+<link rel="stylesheet" href="/css/DetailsPage.css" />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+@{ TempData["pizzaChoise"] = @ViewBag.thePizza.PizzaID;
+    TempData["pizzaPrice"] = @ViewBag.thePizza.PizzaPrice;
+}
 
-<h1>Details</h1>
+<div class="container details">
+    <div class="pizza-info">
+        <div class="row">
+            <div>
+                <div class="card">
+                    <img src="/Images/Pizzas/@(ViewBag.thePizza.PizzaName).jpeg" class="card-img-top" alt="..." style="height: 230px;">
+                    <div class="card-body">
 
-<div>
-    <h4>PizzaDTO</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PizzaID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PizzaID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PizzaName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PizzaName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PizzaType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PizzaType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PizzaPrice)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PizzaPrice)
-        </dd>
-    </dl>
+                        <h5 class="card-title text-center">@ViewBag.thePizza.PizzaName</h5>
+
+                        <h6 class="card-text">Prise $@ViewBag.thePizza.PizzaPrice</h6>
+                        <h6 class="card-text">@ViewBag.thePizza.PizzaType</h6>
+
+                        <p class="card-text">Some pizza descriptions on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <form asp-action="Details" method="post">
+            <div>
+                @using (Html.BeginForm())
+                {
+                    for (int i = 0; i < Model.Toppings.Count; i++)
+                    {
+                        <p>
+                            @Html.CheckBoxFor(m => Model.Toppings[i].IsChecked)
+                            @Model.Toppings[i].ToppingName $ 
+                            @Model.Toppings[i].ToppingPrice
+                            @Html.HiddenFor(m => Model.Toppings[i].ToppingPrice)
+                            @Html.HiddenFor(m => Model.Toppings[i].ToppingID)
+                            @Html.HiddenFor(m => Model.Toppings[i].ToppingName)
+                        </p>
+
+
+                    }
+                    <div class="add-order">
+                        <input type="submit" value="Add to order" class="btn btn-primary w-100" />
+                    </div>
+                    <div class="add-order">
+                        <a href="/Pizza" class="btn btn-warning w-100 another">Choose another pizza</a>
+                    </div>
+                    <div class="add-order">
+                        <a href="/OrderDetail/Index" class="btn btn-success w-100">Finish orders</a>
+                    </div>
+                    @*@ViewBag.Loc*@
+                }
+            </div>
+        </form>
+    </div>
 </div>
 

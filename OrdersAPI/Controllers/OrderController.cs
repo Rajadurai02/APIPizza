@@ -38,16 +38,18 @@ namespace OrdersAPI.Controllers
 
         // POST api/<OrderController>
         [HttpPost]
-        public void Post([FromBody] Order order)
+        public Order Post([FromBody] Order order)
         {
-            _service.PostOrder(order);
+            var neworder = _service.PostOrder(order);
+            return neworder;
         }
 
         // PUT api/<OrderController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Order order)
+        public Order Put(int id, [FromBody] Order order)
         {
-            _service.PutOrder(id, order);
+            var neworder = _service.PutOrder(id, order);
+            return neworder;
         }
 
         // DELETE api/<OrderController>/5

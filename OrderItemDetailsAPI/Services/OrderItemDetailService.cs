@@ -8,9 +8,9 @@ namespace OrderItemDetailsAPI.Services
 {
     public class OrderItemDetailService
     {
-        private readonly OrderItemDetailsApiContext _context;
+        private readonly OrderItemDetailsAPIContext _context;
 
-        public OrderItemDetailService(OrderItemDetailsApiContext context)
+        public OrderItemDetailService(OrderItemDetailsAPIContext context)
         {
             _context = context;
         }

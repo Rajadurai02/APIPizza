@@ -17,45 +17,27 @@ namespace LoginAPI.Controllers
     [Authorize]
     public class ToppingController : ControllerBase
     {
-        private  readonly UserService _UserService;
+        private readonly ToppingService _service;
 
-        public ToppingController(UserService userService)
+        public ToppingController(ToppingService service)
         {
-            _UserService = userService;
-
+            _service = service;
         }
-        // GET: api/<ToppingController>
+        // GET: api/<PizzaController>
         [HttpGet]
-        
-        //public IEnumerable<ToppingDTO> GetToppings()
-        //{
-        //    return _UserService.GetToppings();
-        //}
-        // GET api/<ToppingController>/5
+        public IEnumerable<ToppingDTO> Get()
+        {
+            var toppings = _service.AllToppings();
+            return toppings;
+        }
+
+        // GET api/<PizzaController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ToppingDTO Get(int id)
         {
-            return "value";
+            var topping = _service.GetTopping(id);
+            return topping;
         }
 
-        // POST api/<ToppingController>
-        [HttpPost]
-        public void Post([FromBody] ToppingDTO toppingDetails)
-        {
-            _UserService.ToppingDetail(toppingDetails);
-
-        }
-
-        // PUT api/<ToppingController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ToppingController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

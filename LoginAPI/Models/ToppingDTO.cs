@@ -7,7 +7,7 @@ namespace LoginAPI.Models
 {
     public class ToppingDTO
     {
-        public int ToppingNumber { get; set; }
+        public int ToppingID { get; set; }
         public string ToppingName { get; set; }
         public int ToppingPrice { get; set; }
     }

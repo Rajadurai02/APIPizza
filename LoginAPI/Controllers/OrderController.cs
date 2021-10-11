@@ -16,39 +16,42 @@ namespace LoginAPI.Controllers
     [Authorize]
     public class OrderController : ControllerBase
     {
-        private  readonly UserService _userService;
+        private readonly OrderService _service;
 
-        public OrderController(UserService userService)
+        public OrderController(OrderService service)
         {
-            _userService = userService;
+            _service = service;
         }
         // GET: api/<OrderController>
         [HttpGet]
         public IEnumerable<OrderDTO> Get()
         {
-            return null;
+            var orders = _service.AllOrder();
+            return orders ;
         }
 
         // GET api/<OrderController>/5
         [HttpGet("{id}")]
-        public void Get(OrderDTO orderDTO)
+        public OrderDTO Get(int id)
         {
-           _userService.Orders(orderDTO);
-            
-           
+            var order = _service.GetOrder(id);
+            return order;
         }
 
         // POST api/<OrderController>
         [HttpPost]
-        public void Post([FromBody] OrderDTO orderDTO)
+        public OrderDTO Post([FromBody] OrderDTO orderDTO)
         {
-            _userService.Orders(orderDTO);
+           var order =  _service.AddOrder(orderDTO);
+            return order;
         }
 
         // PUT api/<OrderController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public OrderDTO Put(int id, [FromBody] OrderDTO orderDTO)
         {
+            var order = _service.EditOrder(id, orderDTO);
+            return order;
         }
 
         // DELETE api/<OrderController>/5

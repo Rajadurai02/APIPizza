@@ -115,6 +115,8 @@ D:\October Training\PizzaApplication\PizzaApplicationMVC\obj\Debug\net5.0\ref\Pi
 D:\October Training\PizzaApplication\PizzaApplicationMVC\obj\Debug\net5.0\PizzaApplicationMVC.pdb
 D:\October Training\PizzaApplication\PizzaApplicationMVC\obj\Debug\net5.0\PizzaApplicationMVC.genruntimeconfig.cache
 D:\October Training\PizzaApplication\PizzaApplicationMVC\obj\Debug\net5.0\Razor\Views\User\Register.cshtml.g.cs
-D:\October Training\PizzaApplication\PizzaApplicationMVC\obj\Debug\net5.0\Razor\Views\User\Login.cshtml.g.cs
 D:\October Training\PizzaApplication\PizzaApplicationMVC\obj\Debug\net5.0\Razor\Views\Pizza\Index.cshtml.g.cs
 D:\October Training\PizzaApplication\PizzaApplicationMVC\obj\Debug\net5.0\Razor\Views\Pizza\Details.cshtml.g.cs
+D:\October Training\PizzaApplication\PizzaApplicationMVC\obj\Debug\net5.0\Razor\Views\OrderSummary\Index.cshtml.g.cs
+D:\October Training\PizzaApplication\PizzaApplicationMVC\obj\Debug\net5.0\Razor\Views\OrderSummary\Confirm.cshtml.g.cs
+D:\October Training\PizzaApplication\PizzaApplicationMVC\obj\Debug\net5.0\Razor\Views\User\Login.cshtml.g.cs

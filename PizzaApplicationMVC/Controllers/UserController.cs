@@ -53,7 +53,7 @@ namespace PizzaApplicationMVC.Controllers
             {
                 return View();
             }
-            ViewBag.Error = "Not Registered";
+            ViewBag.Error = "Not Registered! User name already taken";
             return View();
         }
 
@@ -74,7 +74,8 @@ namespace PizzaApplicationMVC.Controllers
                 if (user != null)
                 {
                     TempData["token"] = user.jwtToken;
-                    return RedirectToAction("Details", "Pizza");
+                    TempData["userEmail"] = user.id;
+                    return RedirectToAction("Index", "Pizza");
                 }
             }
             catch

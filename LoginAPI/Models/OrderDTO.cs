@@ -8,6 +8,7 @@ namespace LoginAPI.Models
     public class OrderDTO
     {
         public int OrderID { get; set; }
+        public string Username { get; set; }
 
         public int OrderTotal { get; set; }
 
@@ -15,6 +16,6 @@ namespace LoginAPI.Models
 
         public string Status { get; set; }
 
-        public string jwtToken { get; set; }
+        
     }
 }

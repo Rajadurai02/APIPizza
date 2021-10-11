@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PizzaApplicationMVC.Models;
 using PizzaApplicationMVC.Services;
+using PizzaApplicationMVC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +12,30 @@ namespace PizzaApplicationMVC.Controllers
 {
     public class PizzaController : Controller
     {
-        private readonly PizzaService _service;
+        private readonly PizzaService _pizzaService;
+        private readonly ToppingService _toppingService;
+        private readonly OrderService _orderService;
+        private readonly OrderDetailService _orderDetailService;
+        private readonly OrderItemDetailService _orderItemDetailService;
 
-        public PizzaController(PizzaService service)
+        public PizzaController(PizzaService pizzaService,ToppingService toppingService,OrderService orderService,OrderDetailService orderDetailService,OrderItemDetailService orderItemDetailService)
         {
-            _service = service;
+            _pizzaService = pizzaService;
+            _toppingService = toppingService;
+            _orderService = orderService;
+            _orderDetailService = orderDetailService;
+            _orderItemDetailService = orderItemDetailService;
         }
         // GET: PizzaController
         public ActionResult Index()
         {
             List<PizzaDTO> pizzas = null;
-            if (TempData["token"] != null)
+            string token = (string)TempData.Peek("token");
+            if (token != null)
             {
                 try
                 {
-                    pizzas = _service.AllPizzas(TempData.Peek("token").ToString());
+                    pizzas = _pizzaService.AllPizzas(token);
                 }
                 catch (Exception)
                 {
@@ -39,82 +49,76 @@ namespace PizzaApplicationMVC.Controllers
         public ActionResult Details(int id)
         {
             PizzaDTO pizza = null;
-            id = 1;
-            if (TempData["token"] != null)
+            List<ToppingCheck> toppingCheck = new();
+            ToppingList objBind = new ToppingList();
+            string token = (string)TempData.Peek("token");
+            if (token != null)
             {
                 try
                 {
-                    pizza = _service.GetPizza(id,TempData.Peek("token").ToString());
+                    pizza = _pizzaService.GetPizza(id,token);
+                    List<ToppingDTO> toppingList = _toppingService.AllToppings(token);
+                    foreach (var item in toppingList)
+                    {
+                        ToppingCheck toppingcheck = new() { ToppingID = item.ToppingID, ToppingName = item.ToppingName, ToppingPrice = item.ToppingPrice, IsChecked = false };
+                        toppingCheck.Add(toppingcheck);
+                    }
+                    objBind.Toppings = toppingCheck;
+                    ViewBag.thePizza = pizza;
                 }
                 catch (Exception)
                 {
                     return View();
                 }
             }
-            return View(pizza);
+            return View(objBind);
         }
 
-        // GET: PizzaController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+       
 
-        // POST: PizzaController/Create
+        // POST: PizzaController/Details
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Details(ToppingList toppingList)
         {
-            try
+            OrderDTO newOrder,order;
+            int Price = Convert.ToInt32(TempData.Peek("pizzaPrice"));
+            string token = (string)TempData.Peek("token");
+            //TempData["orderId"] = null;
+            if (TempData.Peek("orderId") == null)
             {
-                return RedirectToAction(nameof(Index));
+                newOrder = new() { Username = Convert.ToString(TempData.Peek("userEmail")), OrderTotal = 0, DeliveryCharge = 0, Status = "pending" };
+                order = _orderService.AddOrder(newOrder,token);
+                TempData["orderId"] = order.OrderID;
+                newOrder = _orderService.GetOrder(Convert.ToInt32(TempData.Peek("orderId")), token);
             }
-            catch
+            else
             {
-                return View();
+                newOrder = _orderService.GetOrder(Convert.ToInt32(TempData.Peek("orderId")),token);
             }
+            OrderDetailDTO neworderdetail;
+            OrderDetailDTO orderDetail = new()
+            {
+                OrderId = Convert.ToInt32(TempData.Peek("orderId")),
+                PizzaId = Convert.ToInt32(TempData.Peek("pizzaChoise"))
+            };
+            neworderdetail = _orderDetailService.AddOrder(orderDetail,token);
+            TempData["itemId"] = neworderdetail.ItemId;
+            foreach (var item in toppingList.Toppings)
+            {
+                if (item.IsChecked)
+                {
+                    OrderItemDetailDTO itemOrder = new() { ItemId = Convert.ToInt32(TempData.Peek("itemId")), ToppingId = item.ToppingID };
+                    Price += (int)_toppingService.GetTopping(item.ToppingID,token).ToppingPrice;
+                    _orderItemDetailService.AddOrder(itemOrder,token);
+                }
+            }
+            //changeOrder = _orderService.GetOrder(Convert.ToInt32(TempData.Peek("orderId")), token);
+            newOrder.OrderTotal += Price;
+            _orderService.EditOrder(Convert.ToInt32(TempData.Peek("orderId")),newOrder,token);
+            return RedirectToAction("Index", "Pizza");
         }
 
-        // GET: PizzaController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: PizzaController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: PizzaController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: PizzaController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+       
     }
 }

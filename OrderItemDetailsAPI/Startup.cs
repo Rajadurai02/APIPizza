@@ -34,11 +34,10 @@ namespace OrderItemDetailsAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OrderItemDetailsAPI", Version = "v1" });
             });
-            services.AddDbContext<OrderItemDetailsApiContext>(options =>
+            services.AddDbContext<OrderItemDetailsAPIContext>(options =>
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:dbConnect"]);
             });
-            services.AddScoped<OrderDetailService>();
             services.AddScoped<OrderItemDetailService>();
         }
 

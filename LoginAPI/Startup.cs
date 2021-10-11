@@ -40,6 +40,10 @@ namespace LoginAPI
             services.AddDbContext<UserContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:dbConnect"]));
             services.AddScoped<UserService>();
             services.AddScoped<PizzaService>();
+            services.AddScoped<ToppingService>();
+            services.AddScoped<OrderService>();
+            services.AddScoped<OrderDetailService>();
+            services.AddScoped<OrderItemDetailService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {

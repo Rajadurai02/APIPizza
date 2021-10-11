@@ -9,7 +9,5 @@ namespace OrderItemDetailsAPI.Models
     {
         public int ItemId { get; set; }
         public int ToppingId { get; set; }
-
-        public virtual OrderDetail Item { get; set; }
     }
 }
