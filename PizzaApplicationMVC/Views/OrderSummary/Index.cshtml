@@ -3,114 +3,239 @@
 @{
     ViewData["Title"] = "Index";
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="~/css/Style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>Document</title>
-</head>
-<body>
-    <div class="container-fluid my-5 d-flex justify-content-center">
-        <div class="card card-1">
+@if (ViewBag.theOrder != null)
+{
+    <!--<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="~/css/Style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="container-fluid my-5 d-flex justify-content-center">
+            <div class="card card-1">
 
-            <div class="card-header bg-white">
-                <div class="media flex-sm-row flex-column-reverse justify-content-between ">
-                    <div class="col my-auto">
-                        <h4 class="mb-0"><span class="change-color">Order Details</span></h4>
+                <div class="card-header bg-white">
+                    <div class="media flex-sm-row flex-column-reverse justify-content-between ">
+                        <div class="col my-auto">
+                            <h4 class="mb-0"><span class="change-color">Order Details</span></h4>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="card-body">
-                @foreach (var item in Model.FinalListPizzas)
-                {
-                    <div class="row mt-4">
-                        <div class="col">
-                            <div class="card card-2">
-                                <div class="card-body">
-                                    <div class="media">
-                                        <div class="sq align-self-center ">
-                                            <img class="img-fluid my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="/Images/Pizzas/@(item.Pizza.PizzaName).jpeg" width="135" height="135" />
-                                        </div>
-                                        <div class="media-body my-auto text-right">
-                                            <div class="row my-auto flex-column flex-md-row">
-                                                <div class="col my-auto">
-                                                    <h6 class="mb-0">
-                                                        Pizza Name - <span class="change-color"> @item.Pizza.PizzaName</span>
-                                                        Price - <span class="change-color">$ @item.Pizza.PizzaPrice</span>
-                                                        Pizza Type - <span class="change-color">@item.Pizza.PizzaType</span>
-                                                    </h6>
+                <div class="card-body">
+                    @foreach (var item in Model.FinalListPizzas)
+                    {
+                        <div class="row mt-4">
+                            <div class="col">
+                                <div class="card card-2">
+                                    <div class="card-body">
+                                        <div class="media">
+                                            <div class="sq align-self-center ">
+                                                <img class="img-fluid my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="/Images/Pizzas/@(item.Pizza.PizzaName).jpeg" width="135" height="135" />
+                                            </div>
+                                            <div class="media-body my-auto text-right">
+                                                <div class="row my-auto flex-column flex-md-row">
+                                                    <div class="col my-auto">
+                                                        <h6 class="mb-0">
+                                                            <span class="change-color" style=" font-size:20px"> @item.Pizza.PizzaName</span>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-auto my-auto">
+                                                        <h6 class="mb-0">
+                                                            <span class="change-color">@item.Pizza.PizzaType</span></h6>
+                                                    </div>
+                                                    <div class="col-auto my-auto">
+                                                        <h6 class="mb-0">
+                                                            <span class="change-color" style=" font-size:20px">$ @item.Pizza.PizzaPrice</span></h6>
+
+                                                    </div>
+                                                    <div>
+                                                        <a asp-action="Remove" asp-route-id="@item.orderDetail.ItemId" class="btn btn-danger">Remove</a>
+                                                    </div>
+
+
+
                                                 </div>
-                                                <div class="col-auto my-auto"> <h6></h6></div>
-                                                <div class="col-auto my-auto"> <h6></h6></div>
-
                                             </div>
                                         </div>
-                                    </div>
-                                    <hr class="my-3 ">
-                                    <div class="row">
-                                        <div class="col-md-3 mb-3"> <h6> Toppings <span><i class=" ml-2 fa fa-refresh" aria-hidden="true"></i></span></h6> </div>
-                                        @foreach (var topping in item.Toppings)
-                                        {
-                                            <div class="col my-auto"><span class="change-color">@topping.ToppingName | $ @topping.ToppingPrice</span></div>
+                                        <hr class="my-3 ">
+                                        <div class="row">
+                                            <div class="col-md-3 mb-3"> <h6> Toppings <span><i class=" ml-2 fa fa-refresh" aria-hidden="true"></i></span></h6> </div>
+                                            @foreach (var topping in item.Toppings)
+                                            {
+                                                <div class="col my-auto"><span class="change-color">@topping.ToppingName | $ @topping.ToppingPrice</span></div>
 
-                                        }
+                                            }
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    }
+                    <div class="row mt-4">
+                        <div class="col">
+                            <div class="row justify-content-between">
+                                <div class="flex-sm-col text-right col">
+                                    <p class="mb-1"><b>Sub Total</b></p>
+                                </div>
+                                <div class="flex-sm-col col-auto">
+                                    <p class="mb-1">$ @(ViewBag.theOrder.OrderTotal - ViewBag.theOrder.DeliveryCharge)</p>
+                                </div>
+                            </div>
+                            <div class="row justify-content-between">
+                                <div class="flex-sm-col text-right col">
+                                    <p class="mb-1"><b>Delivery Charges</b></p>
+                                </div>
+                                <div class="flex-sm-col col-auto">
+                                    <p class="mb-1">$ @ViewBag.theOrder.DeliveryCharge</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row justify-content-between">
+                                <div class="flex-sm-col text-right col">
+                                    <p class="mb-1"><b>Total Amount</b></p>
+                                </div>
+                                <div class="flex-sm-col col-auto">
+                                    <p class="mb-1">$ @ViewBag.theOrder.OrderTotal</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                }
-                <div class="row mt-4">
-                    <div class="col">
+                </div>
+                <div class="card-footer">
+                    <div class="jumbotron-fluid">
                         <div class="row justify-content-between">
-                            <div class="flex-sm-col text-right col">
-                                <p class="mb-1"><b>Sub Total</b></p>
+                            <div class="col-auto my-auto ">-->
+    @*<button class="btn btn-success">Confirm Order</button>*@
+    <!--<a href='@Url.Action("Index","Pizza")'>
+            <input type="button" value="Add Another Pizza" class="btn btn-warning confirm-order" />
+        </a>
+    </div>
+    <div class="col-auto my-auto ">-->
+    @*<button class="btn btn-success">Confirm Order</button>*@
+    <!--<a href='@Url.Action("Confirm","OrderSummary")'>
+                                        <input type="button" value="Confirm Order" class="btn btn-success confirm-order" />
+                                    </a>
+                                </div>
+
                             </div>
-                            <div class="flex-sm-col col-auto">
-                                <p class="mb-1">$ @(ViewBag.theOrder.OrderTotal - ViewBag.deliveryPrice)</p>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between">
-                            <div class="flex-sm-col text-right col">
-                                <p class="mb-1"><b>Delivery Charges</b></p>
-                            </div>
-                            <div class="flex-sm-col col-auto">
-                                <p class="mb-1">$ @ViewBag.deliveryPrice</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row justify-content-between">
-                            <div class="flex-sm-col text-right col">
-                                <p class="mb-1"><b>Total Amount</b></p>
-                            </div>
-                            <div class="flex-sm-col col-auto">
-                                <p class="mb-1">$ @ViewBag.theOrder.OrderTotal</p>
+                            <div class="row mb-3 mt-3 mt-md-0">
+                                <div class="col-auto border-line"> <small class="text-white">Sub-Total: $ @(ViewBag.theOrder.OrderTotal - ViewBag.theOrder.DeliveryCharge)</small></div>
+                                <div class="col-auto border-line"> <small class="text-white">Delivery Charges: $ @ViewBag.theOrder.DeliveryCharge </small></div>
+                                <div class="col-auto "><small class="text-white">Total Amount: $ @ViewBag.theOrder.OrderTotal</small> </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
-                <div class="jumbotron-fluid">
-                    <div class="row justify-content-between">
-                        <div class="col-auto my-auto ">
-                            @*<button class="btn btn-success">Confirm Order</button>*@
-                            <a href='@Url.Action("Confirm","OrderSummary")'>
-                                <input type="button" value="Confirm Order" class="btn btn-success confirm-order" />
-                            </a>
+        </body>
+    </html>-->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="Style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <title>Order Summary</title>
+    </head>
+    <body>
+        @if (Model == null)
+        {
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+            <div class="jumbotron" style="background-color: rgba(255,0,0,0.6);">
+                <h1 class="display-4">Please Order something!!!!</h1>
+                <p class="lead">Do not press the finish order button untill add any pizza</p>
+                <hr class="my-4">
+                <a href='@Url.Action("Index","Pizza")'>
+                    <input type="button" value="Order pizza" class="btn btn-success confirm-order" />
+                </a>
+            </div>
+        }
+        <div class="container mt-5">
+            @foreach (var item in Model.FinalListPizzas)
+            {
+                <div class="card mt-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="/Images/Pizzas/@(item.Pizza.PizzaName).jpeg" class="img-fluid">
                         </div>
+                        <div class="col-md-4">
+                            <h3 class="card-title mt-2">@item.Pizza.PizzaName</h3>
+                            <p>Type - @item.Pizza.PizzaType</p>
+                            <p>Price - $ @item.Pizza.PizzaPrice</p>
+                            <a asp-action="Remove" asp-route-id="@item.orderDetail.ItemId" class="btn btn-danger">Remove Item</a>
+                        </div>
+                        <div class="col-md-4">
+                            <h3 class="card-title mt-2">Toppings</h3>
+                            @foreach (var topping in item.Toppings)
+                            {
+                                <p>@topping.ToppingName | $ @topping.ToppingPrice</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            <div class="card mt-4">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <h3 class="card-title m-2">Sub Total</h3>
+                        <h3 class="card-title m-2">Delivary Chargers</h3><hr>
+                        <h3 class="card-title m-2">Total Amount</h3>
+
+                    </div>
+                    <div class="col-md-4">
+                        <h3 class="card-title mt-2"> $ @(ViewBag.theOrder.OrderTotal - ViewBag.theOrder.DeliveryCharge)</h3>
+                        <h3 class="card-title mt-2"> $ @ViewBag.theOrder.DeliveryCharge</h3><hr>
+                        <h3 class="card-title mt-2"> $ @ViewBag.theOrder.OrderTotal</h3>
+
+                    </div>
+                    <div class="col-md-4">
+                        <h1 class="totalamount" style="font-size:100px">$ @ViewBag.theOrder.OrderTotal</h1>
+                        <a href='@Url.Action("Index","Pizza")'>
+                            <input type="button" value="Add Another Pizza" class="btn btn-warning confirm-order" />
+                        </a>
+                        <a href='@Url.Action("Confirm","OrderSummary")'>
+                            <input type="button" value="Confirm Order" class="btn btn-success confirm-order" />
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
+}
+@*else
+    {
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <div class="jumbotron" style="background-color: rgba(255,0,0,0.6);">
+            <h1 class="display-4">Please Order something!!!!</h1>
+            <p class="lead">Do not press the finish order button untill add any pizza</p>
+            <hr class="my-4">
+            <a href='@Url.Action("Index","Pizza")'>
+                <input type="button" value="Order pizza" class="btn btn-success confirm-order" />
+            </a>
+        </div>
+        }*@
+

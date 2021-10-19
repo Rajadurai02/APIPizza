@@ -36,15 +36,20 @@
                     </div>
                 </div>
             }
+            @if (TempData.Peek("orderId") != null)
+                {
+                    <div class="button-finish">
+                        <a href="/OrderSummary/Index" class="btn border-primary  finish-link-button">Finish orders</a>
+                    </div>
+                }
+            
         }
         else
         {
             <h1>Please Login</h1>
-            <a href="/Home/Index" class="btn border-primary">back to Home</a>
+            <a href="/Home/Index" class="btn border-primary w-100">back to Home</a>
         }
 
     </div>
 </div>
-<div class="button-finish">
-    <a href="/OrderSummary/Index" class="btn border-primary w-50 finish-link-button">Finish orders</a>
-</div>
+

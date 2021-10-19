@@ -114,5 +114,30 @@ namespace LoginAPI.Services
             }
             return order;
         }
+        public string RemoveOrder(int id)
+        {
+            string data = null;
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:39411/api/");
+                    var getTask = client.DeleteAsync("OrderDetail/" + id);
+                    getTask.Wait();
+                    var result = getTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        data = "order removed";
+                        
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+            }
+            return data;
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace PizzaApplicationMVC.ViewModels
     public class FinalOutputModel
     {
         public PizzaDTO Pizza { get; set; }
+        public OrderDetailDTO orderDetail { get; set; }
         public List<ToppingDTO> Toppings { get; set; }
     }
     public class OutputList

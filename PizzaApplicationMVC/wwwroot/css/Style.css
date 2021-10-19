@@ -5,6 +5,14 @@
     color: rgba(116, 116, 116, 0.667);
     /*background: linear-gradient(140deg, #fff, 50%, #BA68C8)*/
 }
+body {
+    background-image: url("https://th.bing.com/th/id/R.3406375fc670228225e7bd3f10152fa5?rik=Ug3HkuUFbz3bPw&riu=http%3a%2f%2fkrisaru.com%2fwp-content%2fuploads%2f2011%2f11%2fbackground-website-light-blue-wallpapers-background.jpg&ehk=PTrzoSq3rf52d1PrVTU3jRiy7V6CYEmZLJJ9N2vMiXk%3d&risl=&pid=ImgRaw&r=0");
+    backface-visibility: hidden;
+}
+
+.totalamount {
+    font-size: 100px;
+}
 
 .container-fluid {
     margin-top: 200px
@@ -21,7 +29,8 @@ p {
 
 .card-1 {
     padding: 10px;
-    box-shadow: 2px 2px 10px 0px rgb(190, 108, 170)
+    box-shadow: 2px 2px 10px 0px rgb(190, 108, 170);
+    width: 500px;
 }
 
 hr {

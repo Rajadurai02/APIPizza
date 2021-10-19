@@ -113,8 +113,17 @@ namespace PizzaApplicationMVC.Controllers
                     _orderItemDetailService.AddOrder(itemOrder,token);
                 }
             }
+            if(newOrder.DeliveryCharge == 0)
+            {
+                newOrder.OrderTotal += Price;
+            }
+            else
+            {
+                newOrder.OrderTotal -= 5;
+                newOrder.OrderTotal += Price;
+            }
             //changeOrder = _orderService.GetOrder(Convert.ToInt32(TempData.Peek("orderId")), token);
-            newOrder.OrderTotal += Price;
+            //newOrder.OrderTotal += Price;
             _orderService.EditOrder(Convert.ToInt32(TempData.Peek("orderId")),newOrder,token);
             return RedirectToAction("Index", "Pizza");
         }

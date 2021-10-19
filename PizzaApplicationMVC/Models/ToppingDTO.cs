@@ -9,6 +9,6 @@ namespace PizzaApplicationMVC.Models
     {
         public int ToppingID { get; set; }
         public string ToppingName { get; set; }
-        public int? ToppingPrice { get; set; }
+        public int ToppingPrice { get; set; }
     }
 }
